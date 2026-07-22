@@ -1,8 +1,12 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { asset } from '../lib/assets'
 import { IconDownload, IconExternal, IconHeadphones } from './Icons'
 
 export default function Capacitacion() {
+  const [infografiaError, setInfografiaError] = useState(false)
+  const infografiaSrc = asset('assets/infografia.png')
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
@@ -82,12 +86,12 @@ export default function Capacitacion() {
         </div>
       </section>
 
-      {/* Infografía */}
+      {/* Infografía — nombre de archivo sin acento: infografia.png */}
       <section className="rounded-3xl border border-ink/8 bg-white/85 p-5 shadow-sm backdrop-blur-sm sm:p-6">
         <div className="mb-4 flex items-center justify-between gap-3">
           <h3 className="font-display text-lg font-bold text-ink">Infografía guía</h3>
           <a
-            href={asset('assets/infografia.png')}
+            href={infografiaSrc}
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-1.5 text-xs font-bold text-teal"
@@ -95,13 +99,30 @@ export default function Capacitacion() {
             Ver completa <IconExternal className="h-3.5 w-3.5" />
           </a>
         </div>
-        <div className="overflow-hidden rounded-2xl border border-ink/8 bg-sand/40 p-2 sm:p-4">
-          <img
-            src={asset('assets/infografia.png')}
-            alt="Infografía NotebookLM"
-            className="mx-auto max-h-[70vh] w-auto max-w-full rounded-xl object-contain"
-            loading="lazy"
-          />
+        <div className="rounded-2xl border border-ink/8 bg-sand/40 p-2 sm:p-4">
+          {infografiaError ? (
+            <div className="flex flex-col items-center justify-center gap-3 px-4 py-10 text-center">
+              <p className="text-sm font-semibold text-ink">No se pudo mostrar la infografía aquí.</p>
+              <a
+                href={infografiaSrc}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-ink px-4 py-2 text-xs font-bold text-white"
+              >
+                Abrir infografia.png <IconExternal className="h-4 w-4" />
+              </a>
+            </div>
+          ) : (
+            <img
+              src={infografiaSrc}
+              alt="Infografia guia NotebookLM"
+              width={2752}
+              height={1536}
+              decoding="async"
+              className="mx-auto block h-auto w-full max-w-full rounded-xl"
+              onError={() => setInfografiaError(true)}
+            />
+          )}
         </div>
       </section>
     </motion.div>
