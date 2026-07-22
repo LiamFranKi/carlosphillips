@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capacitación Docente - IE 5084 Carlos Phillips</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- SweetAlert2 (Para alertas modernas) -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .gradient-header { background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%); }
+        .card-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01); }
+        .tab-btn.active { border-bottom: 3px solid #2563eb; color: #2563eb; font-weight: 700; }
+
+        /* Animación Splash Screen */
+        @keyframes splashFade {
+            0% { opacity: 0; transform: scale(0.85); }
+            20% { opacity: 1; transform: scale(1.02); }
+            80% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(1.08); }
+        }
+        .animate-splash {
+            animation: splashFade 5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- SPLASH SCREEN ANIMADO (5 SEGUNDOS) -->
+    <div id="splash-screen" class="fixed inset-0 z-[100] bg-slate-900 flex flex-col items-center justify-center p-4 transition-opacity duration-700">
+        <div class="animate-splash flex flex-col items-center">
+            <div class="bg-white p-5 rounded-3xl shadow-2xl mb-4 border border-blue-500/20 flex items-center justify-center w-28 h-28">
+                <img src="assets/logo.png" alt="Logo Institucional" class="max-h-full max-w-full object-contain" onerror="this.onerror=null; this.parentElement.innerHTML='<i class=\'fa-solid fa-graduation-cap text-5xl text-blue-600\'></i>';">
+            </div>
+            <h2 class="text-2xl font-extrabold text-white tracking-wide text-center">IE 5084 Carlos Phillips</h2>
+            <p class="text-blue-400 text-sm font-medium mt-1 tracking-wider uppercase">Capacitación Docente • NotebookLM</p>
+        </div>
+    </div>
+
+    <!-- HEADER INSTITUCIONAL -->
+    <header class="gradient-header text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <div class="bg-white p-2 rounded-xl shadow-md flex items-center justify-center w-12 h-12">
+                    <img src="assets/logo.png" alt="Logo Colegio" class="max-h-full max-w-full object-contain" onerror="this.onerror=null; this.parentElement.innerHTML='<i class=\'fa-solid fa-school text-2xl text-blue-800\'></i>';">
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-extrabold tracking-tight">IE 5084 Carlos Phillips</h1>
+                    <p class="text-xs md:text-sm text-blue-100 font-medium">Capacitación Docente: NotebookLM en Educación Primaria</p>
+                </div>
+            </div>
+            <div class="hidden sm:flex items-center space-x-3 bg-white/10 px-3 py-1.5 rounded-full backdrop-blur-md text-xs font-semibold">
+                <span class="inline-block w-2.5 h-2.5 bg-emerald-400 rounded-full animate-pulse"></span>
+                <span>Modo Pruebas / Activo</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-grow w-full">
+
+        <!-- PRESENTACIÓN CON IMAGEN HERO -->
+        <section class="bg-white rounded-2xl p-6 md:p-8 card-shadow mb-8 border border-slate-100 flex flex-col md:flex-row items-center gap-6">
+            <div class="md:w-2/3">
+                <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">Taller Pedagógico Digital</span>
+                <h2 class="text-2xl md:text-3xl font-bold mt-3 text-slate-900">¡Bienvenidos Profesores de Primaria! 👋</h2>
+                <p class="text-slate-600 mt-2 leading-relaxed">
+                    Aprende a potenciar y agilizar la creación de tus sesiones de aprendizaje, unidades didácticas e instrumentos de evaluación utilizando la Inteligencia Artificial de <strong>NotebookLM de Google</strong>.
+                </p>
+            </div>
+            <div class="md:w-1/3 flex justify-center w-full">
+                <div class="relative bg-gradient-to-tr from-blue-600 to-indigo-700 p-1 rounded-2xl shadow-md w-full max-w-xs overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=800&auto=format&fit=crop" alt="Docentes Innovando con Tecnología" class="w-full h-44 object-cover rounded-xl shadow-inner">
+                    <div class="absolute bottom-2 left-2 right-2 bg-slate-900/80 backdrop-blur-md p-2 rounded-lg text-center">
+                        <p class="text-white text-xs font-semibold flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i> Docentes & Inteligencia Artificial
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PESTAÑAS CENTRADAS -->
+        <div class="flex justify-center border-b border-slate-200 mb-8 overflow-x-auto scrollbar-none">
+            <button onclick="switchTab('pretest')" id="tab-pretest" class="tab-btn active py-3 px-5 font-medium text-xs md:text-sm text-slate-600 hover:text-blue-600 whitespace-nowrap transition-all flex items-center gap-2">
+                <i class="fa-solid fa-clipboard-question"></i> 1. Pre-Test
+            </button>
+            <button onclick="switchTab('capacitacion')" id="tab-capacitacion" class="tab-btn py-3 px-5 font-medium text-xs md:text-sm text-slate-600 hover:text-blue-600 whitespace-nowrap transition-all flex items-center gap-2">
+                <i class="fa-solid fa-book-open-reader"></i> 2. Módulo Capacitación
+            </button>
+            <button onclick="switchTab('prompts')" id="tab-prompts" class="tab-btn py-3 px-5 font-medium text-xs md:text-sm text-slate-600 hover:text-blue-600 whitespace-nowrap transition-all flex items-center gap-2">
+                <i class="fa-solid fa-terminal text-amber-500"></i> 3. Prompts NotebookLM
+            </button>
+            <button onclick="switchTab('posttest')" id="tab-posttest" class="tab-btn py-3 px-5 font-medium text-xs md:text-sm text-slate-600 hover:text-blue-600 whitespace-nowrap transition-all flex items-center gap-2">
+                <i class="fa-solid fa-award"></i> 4. Post-Test
+            </button>
+            <button onclick="switchTab('dashboard')" id="tab-dashboard" class="tab-btn py-3 px-5 font-medium text-xs md:text-sm text-slate-600 hover:text-blue-600 whitespace-nowrap transition-all flex items-center gap-2">
+                <i class="fa-solid fa-chart-pie"></i> 5. Dashboard
+            </button>
+        </div>
+
+        <!-- SECCIÓN 1: PRE-TEST INICIAL -->
+        <section id="sec-pretest" class="tab-content block">
+            <div class="bg-white rounded-2xl p-6 md:p-8 card-shadow border border-slate-100 max-w-3xl mx-auto">
+                <div class="mb-6 border-b pb-4">
+                    <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-pen-clip text-blue-600"></i> Evaluación de Diagnóstico Inicial (Pre-Test)
+                    </h3>
+                    <p class="text-sm text-slate-500 mt-1">Responde a estas preguntas antes de revisar el material para medir tus conocimientos previos.</p>
+                </div>
+
+                <form id="form-pretest" onsubmit="handleTestSubmit(event, 'PRE')">
+                    <div class="mb-6">
+                        <label class="block text-slate-800 font-semibold mb-2">1. ¿Qué es principalmente NotebookLM de Google?</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer text-sm">
+                                <input type="radio" name="pre_q1" value="A" required class="w-4 h-4 text-blue-600">
+                                <span class="ml-3">A) Un buscador web general para descargar diapositivas.</span>
+                            </label>
+                            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer text-sm">
+                                <input type="radio" name="pre_q1" value="B" class="w-4 h-4 text-blue-600">
+                                <span class="ml-3">B) Un cuaderno inteligente que analiza tus propios documentos cargados.</span>
+                            </label>
+                            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer text-sm">
+                                <input type="radio" name="pre_q1" value="C" class="w-4 h-4 text-blue-600">
+                                <span class="ml-3">C) Una red social exclusiva para profesores.</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-slate-800 font-semibold mb-2">2. ¿Qué ocurre cuando haces una pregunta en NotebookLM?</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer text-sm">
+                                <input type="radio" name="pre_q2" value="A" required class="w-4 h-4 text-blue-600">
+                                <span class="ml-3">A) Responde basándose en tus documentos de la carpeta o biblioteca subida.</span>
+                            </label>
+                            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer text-sm">
+                                <input type="radio" name="pre_q2" value="B" class="w-4 h-4 text-blue-600">
+                                <span class="ml-3">B) Inventa respuestas sacadas de foros aleatorios.</span>
+                            </label>
+                            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer text-sm">
+                                <input type="radio" name="pre_q2" value="C" class="w-4 h-4 text-blue-600">
+                                <span class="ml-3">C) Solo te reacciona con emojis.</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-slate-800 font-semibold mb-2">3. ¿Qué utilidad tiene la función "Audio Overview" (Podcast)?</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer text-sm">
+                                <input type="radio" name="pre_q3" value="A" required class="w-4 h-4 text-blue-600">
+                                <span class="ml-3">A) Graba el audio de tu clase presencial.</span>
+                            </label>
+                            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer text-sm">
+                                <input type="radio" name="pre_q3" value="B" class="w-4 h-4 text-blue-600">
+                                <span class="ml-3">B) Genera una conversación sintética en audio analizando tus fuentes subidas.</span>
+                            </label>
+                            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer text-sm">
+                                <input type="radio" name="pre_q3" value="C" class="w-4 h-4 text-blue-600">
+                                <span class="ml-3">C) Es una lista de reproducción de música instrumental.</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">
+                        <span>Enviar Respuestas del Pre-Test</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: MÓDULO DE CAPACITACIÓN -->
+        <section id="sec-capacitacion" class="tab-content hidden">
+            <div class="space-y-8">
+
+                <!-- 1. PODCAST AUDIO OVERVIEW (PRIMER ELEMENTO VISIBLE) -->
+                <div class="bg-white rounded-2xl p-6 md:p-8 card-shadow border border-slate-100">
+                    <h3 class="text-xl font-bold text-slate-900 mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-podcast text-purple-600"></i> Podcast Audio Overview
+                    </h3>
+                    <p class="text-xs text-slate-500 mb-6">Escucha el resumen en formato de audio generado sintéticamente por NotebookLM.</p>
+                    
+                    <div class="bg-gradient-to-r from-purple-50 to-indigo-50 p-6 rounded-2xl border border-purple-100 flex flex-col md:flex-row items-center justify-between gap-6">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-14 h-14 rounded-2xl bg-purple-600 text-white flex items-center justify-center shadow-lg shadow-purple-200 flex-shrink-0">
+                                <i class="fa-solid fa-headphones text-2xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-base font-bold text-slate-800">Resumen Audible para Docentes</h4>
+                                <p class="text-xs text-slate-500 mt-0.5">Archivo: <span class="font-mono text-purple-700">assets/podcast.m4a</span></p>
+                            </div>
+                        </div>
+                        <div class="w-full md:w-1/2">
+                            <audio controls class="w-full shadow-sm rounded-lg">
+                                <source src="assets/podcast.m4a" type="audio/mp4">
+                                Tu navegador no soporta el reproductor M4A.
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. PRESENTACIÓN SLIDES -->
+                <div class="bg-white rounded-2xl p-6 md:p-8 card-shadow border border-slate-100">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4 pb-4 border-b">
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                                <i class="fa-solid fa-file-powerpoint text-red-500"></i> Presentación de la Capacitación
+                            </h3>
+                            <p class="text-xs text-slate-500 mt-1">Pasa las diapositivas a ancho completo o descarga el archivo original.</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <a href="assets/presentacion.pdf" target="_blank" class="px-3 py-2 bg-red-50 hover:bg-red-100 text-red-700 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 border border-red-200">
+                                <i class="fa-solid fa-file-pdf"></i> Abrir PDF
+                            </a>
+                            <a href="assets/presentacion.pptx" download class="px-3 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 border border-blue-200">
+                                <i class="fa-solid fa-download"></i> PPTX
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="w-full rounded-2xl overflow-hidden border border-slate-200 shadow-md bg-slate-900">
+                        <iframe 
+                            src="assets/presentacion.pdf#view=FitH&toolbar=1&navpanes=0" 
+                            class="w-full h-[550px] md:h-[650px] border-0" 
+                            allow="fullscreen">
+                            <p class="p-6 text-center text-slate-300 text-sm">
+                                Tu navegador no soporta la vista previa directa. 
+                                <a href="assets/presentacion.pdf" target="_blank" class="text-blue-400 underline font-bold">Haz clic aquí para abrir el PDF</a>.
+                            </p>
+                        </iframe>
+                    </div>
+                </div>
+
+                <!-- 3. INFOGRAFÍA GUÍA -->
+                <div class="bg-white rounded-2xl p-6 md:p-8 card-shadow border border-slate-100">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-image text-amber-500"></i> Infografía Guía
+                        </h3>
+                        <a href="assets/infografia.png" target="_blank" class="text-xs text-blue-600 hover:underline font-semibold flex items-center gap-1">
+                            <i class="fa-solid fa-up-right-from-square"></i> Ver imagen completa
+                        </a>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex justify-center">
+                        <img src="assets/infografia.png" alt="Infografía NotebookLM" class="max-h-[600px] w-auto object-contain rounded-lg shadow-sm" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'py-12 text-center text-slate-400\'><i class=\'fa-solid fa-image-slash text-4xl mb-2\'></i><p class=\'text-xs\'>No se encontró assets/infografia.png</p></div>';">
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: PROMPTS PARA NOTEBOOKLM -->
+        <section id="sec-prompts" class="tab-content hidden">
+            <div class="bg-white rounded-2xl p-6 md:p-8 card-shadow border border-slate-100 space-y-8">
+                
+                <div class="border-b pb-6">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center font-bold text-xl shadow-md">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-900">Biblioteca de Prompts Pedagógicos para NotebookLM</h3>
+                            <p class="text-xs text-slate-500 mt-0.5">Ejemplos aplicados con la **Sesión de Aprendizaje real: 5to de Primaria - Ciencia y Tecnología (IE 5084 Carlos Phillips)**.</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-4 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900 flex items-start gap-3">
+                        <i class="fa-solid fa-lightbulb text-amber-600 text-base mt-0.5"></i>
+                        <span><strong>¿Cómo usar esta sección?</strong> Sube tus fuentes a NotebookLM (el CNEB, lecturas de apoyo o guías curriculares) y luego copia y pega cualquiera de estos prompts en el chat para obtener resultados profesionales.</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <!-- PROMPT 1 -->
+                    <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 flex flex-col justify-between hover:border-blue-300 transition-all">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="bg-blue-100 text-blue-800 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">1. Planificación CNEB</span>
+                                <span class="text-xs font-semibold text-slate-400">Sesión Didáctica</span>
+                            </div>
+                            <h4 class="font-bold text-slate-800 text-sm mb-2">Generar Sesión Completa de Ciencia y Tecnología</h4>
+                            <p class="text-xs text-slate-600 mb-3 leading-relaxed">
+                                Le pide a NotebookLM estructurar la sesión completa manteniendo la competencia, criterios y los momentos didácticos.
+                            </p>
+                            <div class="bg-white p-3 rounded-xl border border-slate-200 text-xs text-slate-700 font-mono space-y-1 mb-4 select-all" id="prompt-1">
+                                Actúa como un experto pedagógico del Ministerio de Educación de Perú. Utilizando la información de las fuentes subidas sobre "Los Sentidos y los Alimentos", genera una Sesión de Aprendizaje de 90 minutos para 5to Grado de Primaria.<br><br>
+                                Incluye:<br>
+                                1. Datos Informativos (IE 5084 Carlos Phillips, Área, Grado).<br>
+                                2. Propósito de Aprendizaje con la competencia "Indaga mediante métodos científicos para construir sus conocimientos" y 2 criterios de evaluación.<br>
+                                3. Secuencia Didáctica (Inicio, Desarrollo y Cierre) con una situación retadora y conflicto cognitivo.<br>
+                                4. Plan de indagación con estaciones de trabajo práctico.
+                            </div>
+                        </div>
+                        <button onclick="copyPrompt('prompt-1')" class="w-full bg-slate-900 hover:bg-blue-600 text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-all flex items-center justify-center gap-2">
+                            <i class="fa-regular fa-copy"></i>
+                            <span>Copiar Prompt 1</span>
+                        </button>
+                    </div>
+
+                    <!-- PROMPT 2 -->
+                    <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 flex flex-col justify-between hover:border-blue-300 transition-all">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="bg-purple-100 text-purple-800 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">2. Indagación Práctica</span>
+                                <span class="text-xs font-semibold text-slate-400">Estaciones de Trabajo</span>
+                            </div>
+                            <h4 class="font-bold text-slate-800 text-sm mb-2">Diseñar Estaciones Sensoriales de Experimentos</h4>
+                            <p class="text-xs text-slate-600 mb-3 leading-relaxed">
+                                Ideal para diseñar dinámicas grupales con muestras de alimentos reales para la fase de recojo de datos.
+                            </p>
+                            <div class="bg-white p-3 rounded-xl border border-slate-200 text-xs text-slate-700 font-mono space-y-1 mb-4 select-all" id="prompt-2">
+                                A partir del texto subido sobre los órganos de los sentidos y la nutrición, diseña 3 estaciones de indagación sensorial para el aula de 5to Grado:<br><br>
+                                • Estación 1: La Vista (Comparar alimento fresco vs. ultraprocesado con colorantes).<br>
+                                • Estación 2: El Olfato (Reconocer frescura en pan o fruta).<br>
+                                • Estación 3: El Tacto (Identificar textura de frutas turgentes vs. oxidadas).<br><br>
+                                Para cada estación detalla: Materiales sencillos, instrucción clara para el estudiante de 10 años y una pregunta guía para su ficha de registro.
+                            </div>
+                        </div>
+                        <button onclick="copyPrompt('prompt-2')" class="w-full bg-slate-900 hover:bg-blue-600 text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-all flex items-center justify-center gap-2">
+                            <i class="fa-regular fa-copy"></i>
+                            <span>Copiar Prompt 2</span>
+                        </button>
+                    </div>
+
+                    <!-- PROMPT 3 -->
+                    <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 flex flex-col justify-between hover:border-blue-300 transition-all">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">3. Evaluación</span>
+                                <span class="text-xs font-semibold text-slate-400">Lista de Cotejo</span>
+                            </div>
+                            <h4 class="font-bold text-slate-800 text-sm mb-2">Crear Lista de Cotejo y Ficha de Registro</h4>
+                            <p class="text-xs text-slate-600 mb-3 leading-relaxed">
+                                Genera instrumentos de evaluación formativa alineados a la competencia y evidencias de aprendizaje.
+                            </p>
+                            <div class="bg-white p-3 rounded-xl border border-slate-200 text-xs text-slate-700 font-mono space-y-1 mb-4 select-all" id="prompt-3">
+                                Genera una Lista de Cotejo para evaluar a 30 estudiantes de 5to Grado B en la sesión "Indagamos: ¿Cómo nos ayudan los sentidos a elegir alimentos sanos?".<br><br>
+                                Define 2 Criterios de Evaluación precisados:<br>
+                                1. Planteamiento de hipótesis sobre apariencia/olor y estado de conservación.<br>
+                                2. Registro y comparación de datos sensoriales para validar o refutar su hipótesis.<br><br>
+                                Incluye además una Ficha de Registro individual en formato de tabla para que el alumno complete sus explicaciones iniciales vs. explicaciones finales.
+                            </div>
+                        </div>
+                        <button onclick="copyPrompt('prompt-3')" class="w-full bg-slate-900 hover:bg-blue-600 text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-all flex items-center justify-center gap-2">
+                            <i class="fa-regular fa-copy"></i>
+                            <span>Copiar Prompt 3</span>
+                        </button>
+                    </div>
+
+                    <!-- PROMPT 4 -->
+                    <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 flex flex-col justify-between hover:border-blue-300 transition-all">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="bg-red-100 text-red-800 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">4. Metacognición</span>
+                                <span class="text-xs font-semibold text-slate-400">Preguntas Clave</span>
+                            </div>
+                            <h4 class="font-bold text-slate-800 text-sm mb-2">Preguntas de Conflicto Cognitivo y Cierre</h4>
+                            <p class="text-xs text-slate-600 mb-3 leading-relaxed">
+                                Crea preguntas abiertas para activar el pensamiento crítico en el Inicio y la metacognición en el Cierre.
+                            </p>
+                            <div class="bg-white p-3 rounded-xl border border-slate-200 text-xs text-slate-700 font-mono space-y-1 mb-4 select-all" id="prompt-4">
+                                Redacta 5 preguntas de Conflicto Cognitivo para el inicio de la clase que desafíen a los alumnos de 5to grado sobre por qué no todo alimento con aroma bonito o color brillante es saludable (ej. snacks o golosinas).<br><br>
+                                Asimismo, redacta 5 preguntas de Metacognición para el Cierre de la clase que conecten lo aprendido con la vida diaria (por ejemplo, cómo usarán sus sentidos al comprar alimentos en el quiosco de la escuela o en el mercado).
+                            </div>
+                        </div>
+                        <button onclick="copyPrompt('prompt-4')" class="w-full bg-slate-900 hover:bg-blue-600 text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-all flex items-center justify-center gap-2">
+                            <i class="fa-regular fa-copy"></i>
+                            <span>Copiar Prompt 4</span>
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4: POST-TEST FINAL -->
+        <section id="sec-posttest" class="tab-content hidden">
+            <div class="bg-white rounded-2xl p-6 md:p-8 card-shadow border border-slate-100 max-w-3xl mx-auto">
+                <div class="mb-6 border-b pb-4">
+                    <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-graduation-cap text-emerald-600"></i> Evaluación de Salida (Post-Test)
+                    </h3>
+                    <p class="text-sm text-slate-500 mt-1">Demuestra lo aprendido respondiendo a estas preguntas finales.</p>
+                </div>
+
+                <form id="form-posttest" onsubmit="handleTestSubmit(event, 'POST')">
+                    <div class="mb-6">
+                        <label class="block text-slate-800 font-semibold mb-2">1. ¿Cuál es el primer paso para empezar a trabajar en NotebookLM?</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer text-sm">
+                                <input type="radio" name="post_q1" value="A" required class="w-4 h-4 text-emerald-600">
+                                <span class="ml-3">A) Crear un cuaderno y subir tus archivos fuente (PDF, Word, enlaces).</span>
+                            </label>
+                            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer text-sm">
+                                <input type="radio" name="post_q1" value="B" class="w-4 h-4 text-emerald-600">
+                                <span class="ml-3">B) Buscar imágenes públicas en Google.</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-slate-800 font-semibold mb-2">2. ¿Por qué NotebookLM ofrece respuestas confiables para elaborar sesiones?</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer text-sm">
+                                <input type="radio" name="post_q2" value="A" required class="w-4 h-4 text-emerald-600">
+                                <span class="ml-3">A) Porque se ciñe a la documentación cargada por el usuario, citando las fuentes.</span>
+                            </label>
+                            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer text-sm">
+                                <input type="radio" name="post_q2" value="B" class="w-4 h-4 text-emerald-600">
+                                <span class="ml-3">B) Porque descarga automáticamente plantillas editables.</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-slate-800 font-semibold mb-2">3. ¿Qué aporta la función "Audio Overview"?</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer text-sm">
+                                <input type="radio" name="post_q3" value="A" required class="w-4 h-4 text-emerald-600">
+                                <span class="ml-3">A) Facilita el repaso rápido del tema en formato conversación de podcast.</span>
+                            </label>
+                            <label class="flex items-center p-3 rounded-lg border border-slate-200 hover:bg-slate-50 cursor-pointer text-sm">
+                                <input type="radio" name="post_q3" value="B" class="w-4 h-4 text-emerald-600">
+                                <span class="ml-3">B) Reemplaza por completo el trabajo en el aula.</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-6 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">
+                        <span>Finalizar Post-Test y Ver Estadísticas</span>
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 5: TABLERO ESTADÍSTICO REINICIADO -->
+        <section id="sec-dashboard" class="tab-content hidden">
+            <div class="bg-white rounded-2xl p-6 md:p-8 card-shadow border border-slate-100">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 pb-4 border-b gap-4">
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-chart-line text-blue-600"></i> Estadísticas Comparativas (Pre-Test vs Post-Test)
+                        </h3>
+                        <p class="text-xs text-slate-500 mt-1">Resultados en vivo de las pruebas realizadas en la IE 5084 Carlos Phillips.</p>
+                    </div>
+                    <button onclick="resetStats()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all">
+                        <i class="fa-solid fa-rotate-right"></i> Reiniciar Vista
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-center">
+                        <p class="text-xs font-semibold text-slate-500 uppercase">Respuestas Recibidas</p>
+                        <p id="stat-total" class="text-3xl font-extrabold text-slate-800 mt-1">0</p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-xl border border-blue-100 text-center">
+                        <p class="text-xs font-semibold text-blue-600 uppercase">Aciertos Pre-Test</p>
+                        <p id="stat-pre" class="text-3xl font-extrabold text-blue-700 mt-1">0%</p>
+                    </div>
+                    <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-100 text-center">
+                        <p class="text-xs font-semibold text-emerald-600 uppercase">Aciertos Post-Test</p>
+                        <p id="stat-post" class="text-3xl font-extrabold text-emerald-700 mt-1">0%</p>
+                    </div>
+                </div>
+
+                <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                    <canvas id="comparisonChart" class="max-h-80"></canvas>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 text-xs py-6 mt-12 border-t border-slate-800">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p>© 2026 IE 5084 Carlos Phillips • Plan de Capacitación Tecnológica</p>
+            <p><i class="fa-solid fa-laptop-code text-blue-400"></i> Módulo de Innovación Pedagógica</p>
+        </div>
+    </footer>
+
+    <script>
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzbyX1XcJ0R8UFVWn52iBePK8zd1ck7uBKQNBG4xZyUTV2ykkBxRsxOu18DwoGya1oa/exec";
+
+        let testStats = {
+            preCount: 0,
+            postCount: 0,
+            preScores: [0, 0, 0],
+            postScores: [0, 0, 0]
+        };
+
+        const CORRECT_ANSWERS = {
+            PRE: { pre_q1: 'B', pre_q2: 'A', pre_q3: 'B' },
+            POST: { post_q1: 'A', post_q2: 'A', post_q3: 'A' }
+        };
+
+        // Splash screen timer
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                if (splash) {
+                    splash.style.opacity = '0';
+                    splash.style.pointerEvents = 'none';
+                    setTimeout(() => splash.remove(), 700);
+                }
+            }, 4300);
+        });
+
+        /* CAMBIO DE PESTAÑAS CON SCROLL AUTOMÁTICO AL INICIO DE LA SECCIÓN */
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.add('hidden');
+                el.classList.remove('block');
+            });
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+            const targetSection = document.getElementById('sec-' + tabId);
+            targetSection.classList.remove('hidden');
+            targetSection.classList.add('block');
+            document.getElementById('tab-' + tabId).classList.add('active');
+
+            // Hace scroll suave arriba para comenzar la lectura siempre por el Podcast o primer encabezado
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if(tabId === 'dashboard') {
+                renderChart();
+            }
+        }
+
+        /* FUNCIÓN COPIAR PROMPTS CON SWEETALERT2 */
+        function copyPrompt(elementId) {
+            const promptText = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(promptText).then(() => {
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Prompt Copiado!',
+                    text: 'Ya puedes pegarlo directamente en NotebookLM.',
+                    timer: 2000,
+                    showConfirmButton: false,
+                    toast: true,
+                    position: 'top-end'
+                });
+            }).catch(err => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error al copiar',
+                    text: 'Por favor, selecciona el texto manualmente.',
+                    confirmButtonColor: '#2563eb'
+                });
+            });
+        }
+
+        /* ENVÍO DE FORMULARIOS CON SWEETALERT2 Y NAVEGACIÓN LIMPIA */
+        function handleTestSubmit(event, type) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            formData.append('tipo', type);
+            formData.append('fecha', new Date().toLocaleString());
+
+            // Procesamiento de respuestas locales para la gráfica
+            if (type === 'PRE') {
+                testStats.preCount++;
+                if (formData.get('pre_q1') === CORRECT_ANSWERS.PRE.pre_q1) testStats.preScores[0]++;
+                if (formData.get('pre_q2') === CORRECT_ANSWERS.PRE.pre_q2) testStats.preScores[1]++;
+                if (formData.get('pre_q3') === CORRECT_ANSWERS.PRE.pre_q3) testStats.preScores[2]++;
+            } else if (type === 'POST') {
+                testStats.postCount++;
+                if (formData.get('post_q1') === CORRECT_ANSWERS.POST.post_q1) testStats.postScores[0]++;
+                if (formData.get('post_q2') === CORRECT_ANSWERS.POST.post_q2) testStats.postScores[1]++;
+                if (formData.get('post_q3') === CORRECT_ANSWERS.POST.post_q3) testStats.postScores[2]++;
+            }
+
+            // Enviar a Google Sheets
+            if (GOOGLE_SCRIPT_URL) {
+                fetch(GOOGLE_SCRIPT_URL, { 
+                    method: 'POST', 
+                    body: formData,
+                    mode: 'no-cors'
+                })
+                .then(() => console.log(`[Google Sheet] Registrado con éxito: ${type}-Test`))
+                .catch(err => console.error('[Google Sheet] Error de envío:', err));
+            }
+
+            form.reset();
+
+            // Alerta SweetAlert2 elegante
+            Swal.fire({
+                icon: 'success',
+                title: '¡Registro Exitoso!',
+                text: `Tus respuestas del ${type}-Test han sido enviadas a Google Sheets.`,
+                confirmButtonText: 'Continuar',
+                confirmButtonColor: type === 'PRE' ? '#2563eb' : '#10b981',
+                customClass: {
+                    popup: 'rounded-2xl',
+                    confirmButton: 'rounded-xl text-sm font-bold px-5 py-2.5'
+                }
+            }).then(() => {
+                if (type === 'PRE') {
+                    switchTab('capacitacion');
+                } else {
+                    switchTab('dashboard');
+                }
+            });
+        }
+
+        /* REINICIAR MÉTRICAS CON SWEETALERT2 */
+        function resetStats() {
+            testStats = { preCount: 0, postCount: 0, preScores: [0, 0, 0], postScores: [0, 0, 0] };
+            renderChart();
+            Swal.fire({
+                icon: 'info',
+                title: 'Vista Reiniciada',
+                text: 'Las estadísticas en pantalla han vuelto a 0.',
+                timer: 1800,
+                showConfirmButton: false,
+                toast: true,
+                position: 'top-end'
+            });
+        }
+
+        /* GRÁFICO DINÁMICO */
+        let chartInstance = null;
+        function renderChart() {
+            const total = testStats.preCount + testStats.postCount;
+            const prePct = testStats.preCount > 0 
+                ? Math.round((testStats.preScores.reduce((a,b)=>a+b,0) / (testStats.preCount * 3)) * 100) 
+                : 0;
+            const postPct = testStats.postCount > 0 
+                ? Math.round((testStats.postScores.reduce((a,b)=>a+b,0) / (testStats.postCount * 3)) * 100) 
+                : 0;
+
+            document.getElementById('stat-total').innerText = total;
+            document.getElementById('stat-pre').innerText = prePct + '%';
+            document.getElementById('stat-post').innerText = postPct + '%';
+
+            const preBarData = testStats.preScores.map(val => testStats.preCount ? Math.round((val/testStats.preCount)*100) : 0);
+            const postBarData = testStats.postScores.map(val => testStats.postCount ? Math.round((val/testStats.postCount)*100) : 0);
+
+            const ctx = document.getElementById('comparisonChart').getContext('2d');
+            if(chartInstance) chartInstance.destroy();
+
+            chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Pregunta 1: Conceptos', 'Pregunta 2: Utilidad/Fuentes', 'Pregunta 3: Audio Overview'],
+                    datasets: [
+                        { label: 'Aciertos Pre-Test (%)', data: preBarData, backgroundColor: '#93c5fd' },
+                        { label: 'Aciertos Post-Test (%)', data: postBarData, backgroundColor: '#10b981' }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: { 
+                        y: { 
+                            beginAtZero: true, 
+                            max: 100,
+                            ticks: { callback: v => v + '%' }
+                        } 
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
