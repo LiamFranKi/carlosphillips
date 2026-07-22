@@ -93,6 +93,22 @@ export function IconRefresh({ className = 'w-5 h-5' }) {
   )
 }
 
+export function IconPlay({ className = 'w-5 h-5' }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+      <path d="M8 5.5v13l11-6.5L8 5.5z" />
+    </svg>
+  )
+}
+
+export function IconExpand({ className = 'w-5 h-5' }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
+      <path d="M9 4H5v4M15 4h4v4M9 20H5v-4M15 20h4v-4" />
+    </svg>
+  )
+}
+
 const MAP = {
   clipboard: IconClipboard,
   book: IconBook,

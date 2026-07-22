@@ -1,13 +1,16 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { absoluteAsset, asset, googlePdfViewer } from '../lib/assets'
-import { IconDownload, IconExternal, IconHeadphones } from './Icons'
+import { IconDownload, IconExpand, IconExternal, IconHeadphones, IconPlay } from './Icons'
 
 export default function Capacitacion() {
   const [infografiaError, setInfografiaError] = useState(false)
   const [showPdf, setShowPdf] = useState(false)
+  const videoRef = useRef(null)
+  const videoShellRef = useRef(null)
 
   const infografiaSrc = asset('assets/infografia.png')
+  const videoSrc = asset('assets/video.mp4')
   const pdfPath = 'assets/presentacion.pdf'
   const pptxHref = asset('assets/presentacion.pptx')
 
@@ -23,6 +26,28 @@ export default function Capacitacion() {
     }
   }
 
+  async function enterFullscreen() {
+    const shell = videoShellRef.current
+    const video = videoRef.current
+    if (!shell || !video) return
+
+    try {
+      if (shell.requestFullscreen) {
+        await shell.requestFullscreen()
+      } else if (video.webkitEnterFullscreen) {
+        // iOS Safari: fullscreen nativo del video
+        video.webkitEnterFullscreen()
+        return
+      } else if (shell.webkitRequestFullscreen) {
+        await shell.webkitRequestFullscreen()
+      }
+      await video.play().catch(() => {})
+    } catch {
+      // Si el navegador bloquea fullscreen, al menos reproduce
+      video.play().catch(() => {})
+    }
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
@@ -33,7 +58,7 @@ export default function Capacitacion() {
       <div>
         <h2 className="font-display text-2xl font-bold text-ink sm:text-3xl">Módulo de capacitación</h2>
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-soft/75">
-          Escucha el podcast, revisa la presentación y consulta la infografía guía. Empieza por el audio si estás en el móvil.
+          Escucha el podcast, mira el video, revisa la presentación y consulta la infografía guía.
         </p>
       </div>
 
@@ -55,6 +80,50 @@ export default function Capacitacion() {
             <source src={asset('assets/podcast.m4a')} type="audio/mp4" />
             Tu navegador no soporta el reproductor de audio.
           </audio>
+        </div>
+      </section>
+
+      {/* Video explicativo */}
+      <section className="overflow-hidden rounded-3xl border border-ink/8 bg-white/90 shadow-sm backdrop-blur-sm">
+        <div className="flex flex-col gap-3 border-b border-ink/8 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+          <div className="flex items-start gap-3">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-teal/12 text-teal">
+              <IconPlay className="h-5 w-5" />
+            </div>
+            <div className="min-w-0">
+              <h3 className="font-display text-lg font-bold text-ink">Video explicativo</h3>
+              <p className="mt-0.5 text-xs text-ink-soft/70">
+                Tutorial paso a paso de NotebookLM para docentes.
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={enterFullscreen}
+            className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-ink px-4 py-2.5 text-xs font-bold text-white transition hover:bg-teal sm:w-auto"
+          >
+            <IconExpand className="h-4 w-4" />
+            Pantalla completa
+          </button>
+        </div>
+
+        <div
+          ref={videoShellRef}
+          className="relative w-full bg-ink"
+        >
+          <div className="relative aspect-video w-full">
+            <video
+              ref={videoRef}
+              className="absolute inset-0 h-full w-full object-contain bg-black"
+              controls
+              playsInline
+              preload="metadata"
+              controlsList="nodownload"
+            >
+              <source src={videoSrc} type="video/mp4" />
+              Tu navegador no soporta la reproducción de video.
+            </video>
+          </div>
         </div>
       </section>
 
