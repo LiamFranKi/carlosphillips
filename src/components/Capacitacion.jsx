@@ -8,9 +8,12 @@ export default function Capacitacion() {
   const [showPdf, setShowPdf] = useState(false)
   const videoRef = useRef(null)
   const videoShellRef = useRef(null)
+  const reelRef = useRef(null)
+  const reelShellRef = useRef(null)
 
   const infografiaSrc = asset('assets/infografia.png')
   const videoSrc = asset('assets/video.mp4')
+  const reelSrc = asset('assets/video1.mp4')
   const pdfPath = 'assets/presentacion.pdf'
   const pptxHref = asset('assets/presentacion.pptx')
 
@@ -26,9 +29,9 @@ export default function Capacitacion() {
     }
   }
 
-  async function enterFullscreen() {
-    const shell = videoShellRef.current
-    const video = videoRef.current
+  async function enterFullscreen(shellRef, videoRefTarget) {
+    const shell = shellRef.current
+    const video = videoRefTarget.current
     if (!shell || !video) return
 
     try {
@@ -43,7 +46,6 @@ export default function Capacitacion() {
       }
       await video.play().catch(() => {})
     } catch {
-      // Si el navegador bloquea fullscreen, al menos reproduce
       video.play().catch(() => {})
     }
   }
@@ -83,7 +85,117 @@ export default function Capacitacion() {
         </div>
       </section>
 
-      {/* Video explicativo */}
+      {/* Video vertical tipo TikTok / Reel */}
+      <section className="overflow-hidden rounded-3xl border border-ink/8 bg-white/90 shadow-sm backdrop-blur-sm">
+        <div className="flex flex-col gap-3 border-b border-ink/8 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+          <div className="flex items-start gap-3">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-amber/15 text-amber">
+              <IconPlay className="h-5 w-5" />
+            </div>
+            <div className="min-w-0">
+              <div className="mb-1 flex flex-wrap items-center gap-2">
+                <h3 className="font-display text-lg font-bold text-ink">Reel rápido</h3>
+                <span className="rounded-md bg-ink/8 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-ink/70">
+                  Vertical
+                </span>
+              </div>
+              <p className="text-xs text-ink-soft/70">
+                Resumen corto estilo TikTok — ideal para ver en el celular.
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => enterFullscreen(reelShellRef, reelRef)}
+            className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-ink px-4 py-2.5 text-xs font-bold text-white transition hover:bg-teal sm:w-auto"
+          >
+            <IconExpand className="h-4 w-4" />
+            Pantalla completa
+          </button>
+        </div>
+
+        <div className="grid gap-0 lg:grid-cols-[minmax(0,380px)_1fr]">
+          {/* Columna video */}
+          <div className="flex justify-center bg-gradient-to-b from-ink to-ink-soft px-4 py-6 sm:px-6 sm:py-8 lg:justify-end lg:pr-6">
+            <div
+              ref={reelShellRef}
+              className="relative h-[min(70vh,620px)] w-[min(100%,calc(min(70vh,620px)*9/16))] overflow-hidden rounded-[1.75rem] border-[3px] border-white/15 bg-black shadow-2xl ring-1 ring-white/10"
+            >
+              {/* notch decorativo */}
+              <div className="pointer-events-none absolute top-2.5 left-1/2 z-10 h-1.5 w-16 -translate-x-1/2 rounded-full bg-white/25" />
+              <video
+                ref={reelRef}
+                className="h-full w-full object-cover bg-black"
+                controls
+                playsInline
+                preload="metadata"
+                controlsList="nodownload"
+              >
+                <source src={reelSrc} type="video/mp4" />
+                Tu navegador no soporta la reproducción de video.
+              </video>
+            </div>
+          </div>
+
+          {/* Panel lateral — solo desktop/tablet ancha; llena el espacio del formato vertical */}
+          <aside className="relative hidden overflow-hidden lg:block">
+            <img
+              src={infografiaSrc}
+              alt=""
+              aria-hidden
+              className="absolute inset-0 h-full w-full object-cover opacity-30 blur-[2px] scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-br from-ink/92 via-ink/85 to-teal/40" />
+            <div className="relative flex h-full min-h-[420px] flex-col justify-between p-7 text-white xl:p-9">
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-teal-bright">
+                  IE 5084 Carlos Phillips
+                </p>
+                <h4 className="font-display mt-3 text-2xl font-bold leading-tight xl:text-3xl">
+                  NotebookLM en formato rápido
+                </h4>
+                <p className="mt-3 max-w-sm text-sm leading-relaxed text-sky/90">
+                  Mira este reel para captar la idea en segundos. Luego pasa al video completo y a la presentación.
+                </p>
+                <ul className="mt-6 space-y-2.5 text-sm text-white/85">
+                  <li className="flex gap-2">
+                    <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-teal-bright" />
+                    Ideal para compartir con colegas por WhatsApp
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-teal-bright" />
+                    Complementa la infografía guía del módulo
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-teal-bright" />
+                    Usa pantalla completa para verlo como en el celular
+                  </li>
+                </ul>
+              </div>
+
+              <div className="mt-8 overflow-hidden rounded-2xl border border-white/15 bg-white/10 p-3 backdrop-blur-md">
+                <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-white/60">
+                  Referencia del módulo
+                </p>
+                <img
+                  src={infografiaSrc}
+                  alt="Vista previa de la infografía guía"
+                  className="h-40 w-full rounded-xl object-cover object-top xl:h-48"
+                />
+              </div>
+            </div>
+          </aside>
+
+          {/* Tip móvil bajo el reel */}
+          <div className="border-t border-ink/8 bg-mist/50 px-4 py-3 text-center lg:hidden">
+            <p className="text-xs text-ink-soft/75">
+              Tip: usa <strong className="text-ink">Pantalla completa</strong> para verlo como un TikTok.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Video explicativo horizontal */}
       <section className="overflow-hidden rounded-3xl border border-ink/8 bg-white/90 shadow-sm backdrop-blur-sm">
         <div className="flex flex-col gap-3 border-b border-ink/8 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
           <div className="flex items-start gap-3">
@@ -99,7 +211,7 @@ export default function Capacitacion() {
           </div>
           <button
             type="button"
-            onClick={enterFullscreen}
+            onClick={() => enterFullscreen(videoShellRef, videoRef)}
             className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-ink px-4 py-2.5 text-xs font-bold text-white transition hover:bg-teal sm:w-auto"
           >
             <IconExpand className="h-4 w-4" />
@@ -107,10 +219,7 @@ export default function Capacitacion() {
           </button>
         </div>
 
-        <div
-          ref={videoShellRef}
-          className="relative w-full bg-ink"
-        >
+        <div ref={videoShellRef} className="relative w-full bg-ink">
           <div className="relative aspect-video w-full">
             <video
               ref={videoRef}
