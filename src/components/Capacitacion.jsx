@@ -1,11 +1,27 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
-import { asset } from '../lib/assets'
+import { absoluteAsset, asset, googlePdfViewer } from '../lib/assets'
 import { IconDownload, IconExternal, IconHeadphones } from './Icons'
 
 export default function Capacitacion() {
   const [infografiaError, setInfografiaError] = useState(false)
+  const [showPdf, setShowPdf] = useState(false)
+
   const infografiaSrc = asset('assets/infografia.png')
+  const pdfPath = 'assets/presentacion.pdf'
+  const pptxHref = asset('assets/presentacion.pptx')
+
+  const pdfDirect = useMemo(() => absoluteAsset(pdfPath), [])
+  const pdfViewer = useMemo(() => googlePdfViewer(pdfPath), [])
+
+  function openPdf(event) {
+    event.preventDefault()
+    // En móvil, el visor de Google es más fiable que el PDF nativo.
+    const opened = window.open(pdfViewer, '_blank', 'noopener,noreferrer')
+    if (!opened) {
+      window.location.assign(pdfViewer)
+    }
+  }
 
   return (
     <motion.div
@@ -47,22 +63,30 @@ export default function Capacitacion() {
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h3 className="font-display text-lg font-bold text-ink">Presentación de la capacitación</h3>
-            <p className="mt-1 text-xs text-ink-soft/70">Abre el PDF a pantalla completa o descarga el PPTX.</p>
+            <p className="mt-1 text-xs text-ink-soft/70">
+              En celular úsala con el visor integrado o el botón Abrir PDF.
+            </p>
           </div>
-          <div className="flex flex-wrap gap-2">
-            <a
-              href={asset('assets/presentacion.pdf')}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-ink/10 bg-mist px-3.5 py-2 text-xs font-bold text-ink transition hover:bg-sky/40"
+          <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap">
+            <button
+              type="button"
+              onClick={openPdf}
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-ink/10 bg-mist px-3.5 py-2.5 text-xs font-bold text-ink transition hover:bg-sky/40"
             >
               <IconExternal className="h-4 w-4" />
               Abrir PDF
-            </a>
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowPdf(true)}
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-teal px-3.5 py-2.5 text-xs font-bold text-white transition hover:bg-teal-bright md:hidden"
+            >
+              Ver aquí
+            </button>
             <a
-              href={asset('assets/presentacion.pptx')}
+              href={pptxHref}
               download
-              className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-ink px-3.5 py-2 text-xs font-bold text-white transition hover:bg-ink-soft"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-ink px-3.5 py-2.5 text-xs font-bold text-white transition hover:bg-ink-soft"
             >
               <IconDownload className="h-4 w-4" />
               Descargar PPTX
@@ -70,23 +94,57 @@ export default function Capacitacion() {
           </div>
         </div>
 
-        {/* Desktop preview; mobile prefers open/download */}
+        {/* Desktop: PDF nativo */}
         <div className="mt-5 hidden overflow-hidden rounded-2xl border border-ink/10 bg-ink md:block">
           <iframe
             title="Presentación PDF"
-            src={`${asset('assets/presentacion.pdf')}#view=FitH&toolbar=1&navpanes=0`}
+            src={`${asset(pdfPath)}#view=FitH&toolbar=1&navpanes=0`}
             className="h-[620px] w-full border-0"
           />
         </div>
-        <div className="mt-5 rounded-2xl border border-dashed border-ink/15 bg-mist/60 p-5 text-center md:hidden">
-          <p className="text-sm font-semibold text-ink">Vista previa en móvil limitada</p>
-          <p className="mt-1 text-xs text-ink-soft/70">
-            Usa <strong>Abrir PDF</strong> para ver las diapositivas a pantalla completa.
-          </p>
+
+        {/* Móvil: visor Google (más compatible) */}
+        <div className="mt-5 md:hidden">
+          {showPdf ? (
+            <div className="overflow-hidden rounded-2xl border border-ink/10 bg-white">
+              <iframe
+                title="Presentación PDF móvil"
+                src={pdfViewer}
+                className="h-[70vh] min-h-[420px] w-full border-0"
+                allow="fullscreen"
+              />
+              <div className="flex gap-2 border-t border-ink/8 p-3">
+                <a
+                  href={pdfDirect}
+                  className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-xl border border-ink/10 bg-mist px-3 text-xs font-bold text-ink"
+                >
+                  Descargar PDF
+                </a>
+                <button
+                  type="button"
+                  onClick={openPdf}
+                  className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-xl bg-ink px-3 text-xs font-bold text-white"
+                >
+                  Pantalla completa
+                </button>
+              </div>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setShowPdf(true)}
+              className="flex w-full flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-teal/35 bg-teal/8 px-4 py-8 text-center active:scale-[0.99]"
+            >
+              <span className="text-sm font-bold text-ink">Toca para ver la presentación</span>
+              <span className="text-xs text-ink-soft/70">
+                Se abre un visor compatible con Android e iPhone
+              </span>
+            </button>
+          )}
         </div>
       </section>
 
-      {/* Infografía — nombre de archivo sin acento: infografia.png */}
+      {/* Infografía */}
       <section className="rounded-3xl border border-ink/8 bg-white/85 p-5 shadow-sm backdrop-blur-sm sm:p-6">
         <div className="mb-4 flex items-center justify-between gap-3">
           <h3 className="font-display text-lg font-bold text-ink">Infografía guía</h3>
